@@ -13,6 +13,9 @@ class GiftHubber
 
     parsed_json.each { |comment| recipients[comment['user']['login']] = comment['body'] }
     senders = recipients.keys
+    unless senders.count.even?
+      raise HolidayError, "THERE ARE AN ODD NUMBER OF PARTICIPANTS, THIS IS TERRIBLE!!!!"
+    end
 
     senders.each do |sender|
       recipient_name = (recipients.keys - [sender]).sample
@@ -31,5 +34,8 @@ class GiftHubber
       body message
     end
     mail.deliver!
+  end
+
+  class HolidayError < StandardError
   end
 end

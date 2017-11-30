@@ -60,4 +60,16 @@ class TestGiftHubber < Test::Unit::TestCase
       Mail::TestMailer.deliveries.clear
     end
   end
+
+  def test_requires_an_even_number_of_participants
+    api_response = [
+      { 'user' => { 'login' => 'user1' }, 'body' => 'I want cats' },
+      { 'user' => { 'login' => 'user2' }, 'body' => 'I want pants' },
+      { 'user' => { 'login' => 'user3' }, 'body' => "I'm here to ruin christmas" }
+    ]
+    stub_request(:get, @expected_url).to_return('body' => api_response.to_json)
+    assert_raise GiftHubber::HolidayError do
+      GiftHubber.distribute_gifts(@repo, @issue_number, @access_token)
+    end
+  end
 end
