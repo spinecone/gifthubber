@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 gem "httparty"
-gem "mail"
+gem "mailgun-ruby"
 
 gem "test-unit"
 gem "webmock"
