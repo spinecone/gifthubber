@@ -9,8 +9,8 @@ FROM_ADDRESS = 'sender@example.com'.freeze
 
 class GiftHubber
   def self.distribute_gifts(repo, issue_number)
-    issue_url = "https://api.github.com/repos/#{repo}/issues/#{issue_number}/comments"
-    comments_response = HTTParty.get(issue_url + "?access_token=#{GITHUB_ACCESS_TOKEN}")
+    issue_url = "https://api.github.com/repos/#{repo}/issues/#{issue_number}/comments?per_page=1000&access_token=#{GITHUB_ACCESS_TOKEN}"
+    comments_response = HTTParty.get(issue_url)
     parsed_json = JSON.parse(comments_response.body)
     recipients = {}
 
